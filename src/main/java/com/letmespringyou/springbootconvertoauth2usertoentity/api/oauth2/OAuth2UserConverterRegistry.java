@@ -1,4 +1,4 @@
-package com.letmespringyou.springbootconvertoauth2usertoentity.api.strategy;
+package com.letmespringyou.springbootconvertoauth2usertoentity.api.oauth2;
 
 import com.letmespringyou.springbootconvertoauth2usertoentity.api.entity.User;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -17,6 +17,6 @@ public class OAuth2UserConverterRegistry {
         if (!oauth2UserConverters.containsKey(request.getClientRegistration().getRegistrationId())) {
             throw new IllegalArgumentException("Unknown client registration id: " + request.getClientRegistration().getRegistrationId());
         }
-        return oauth2UserConverters.get(request.getClientRegistration().getRegistrationId()).convert(request, oauth2User);
+        return oauth2UserConverters.get(request.getClientRegistration().getRegistrationId()).convert(oauth2User);
     }
 }

@@ -1,5 +1,6 @@
 package com.letmespringyou.springbootconvertoauth2usertoentity.api.entity;
 
+import com.letmespringyou.springbootconvertoauth2usertoentity.api.enums.OAuth2ExtendedProvider;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -17,15 +18,14 @@ public class User {
     @Id
     private String id;
     private String email;
-    private String phoneNumber;
-    private String firstName;
-    private String lastName;
+    private String fullName;
     private String picture;
     @CreatedDate
     private Instant createdAt;
     @LastModifiedDate
     private Instant updatedAt;
-    private Set<GrantedAuthority> roles;
+    private Set<GrantedAuthority> grantedAuthorities;
+    private OAuth2ExtendedProvider provider;
 
     public User() {
         //
@@ -34,13 +34,12 @@ public class User {
     private User(Builder builder) {
         setId(builder.id);
         setEmail(builder.email);
-        setPhoneNumber(builder.phoneNumber);
-        setFirstName(builder.firstName);
-        setLastName(builder.lastName);
+        setFullName(builder.fullName);
         setPicture(builder.picture);
         setCreatedAt(builder.createdAt);
         setUpdatedAt(builder.updatedAt);
-        setRoles(builder.roles);
+        setGrantedAuthorities(builder.grantedAuthorities);
+        setProvider(builder.provider);
     }
 
     public static Builder builder() {
@@ -63,28 +62,12 @@ public class User {
         this.email = email;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getPicture() {
@@ -111,24 +94,31 @@ public class User {
         this.updatedAt = updatedAt;
     }
 
-    public Set<GrantedAuthority> getRoles() {
-        return roles;
+    public Set<GrantedAuthority> getGrantedAuthorities() {
+        return grantedAuthorities;
     }
 
-    public void setRoles(Set<GrantedAuthority> roles) {
-        this.roles = roles;
+    public void setGrantedAuthorities(Set<GrantedAuthority> grantedAuthorities) {
+        this.grantedAuthorities = grantedAuthorities;
+    }
+
+    public OAuth2ExtendedProvider getProvider() {
+        return provider;
+    }
+
+    public void setProvider(OAuth2ExtendedProvider provider) {
+        this.provider = provider;
     }
 
     public static final class Builder {
         private String id;
         private String email;
-        private String phoneNumber;
-        private String firstName;
-        private String lastName;
+        private String fullName;
         private String picture;
         private Instant createdAt;
         private Instant updatedAt;
-        private Set<GrantedAuthority> roles;
+        private Set<GrantedAuthority> grantedAuthorities;
+        private OAuth2ExtendedProvider provider;
 
         private Builder() {
         }
@@ -143,18 +133,8 @@ public class User {
             return this;
         }
 
-        public Builder withPhoneNumber(String phoneNumber) {
-            this.phoneNumber = phoneNumber;
-            return this;
-        }
-
-        public Builder withFirstName(String firstName) {
-            this.firstName = firstName;
-            return this;
-        }
-
-        public Builder withLastName(String lastName) {
-            this.lastName = lastName;
+        public Builder withFullName(String fullName) {
+            this.fullName = fullName;
             return this;
         }
 
@@ -173,8 +153,13 @@ public class User {
             return this;
         }
 
-        public Builder withRoles(Set<GrantedAuthority> roles) {
-            this.roles = roles;
+        public Builder withGrantedAuthorities(Set<GrantedAuthority> grantedAuthorities) {
+            this.grantedAuthorities = grantedAuthorities;
+            return this;
+        }
+
+        public Builder withProvider(OAuth2ExtendedProvider provider) {
+            this.provider = provider;
             return this;
         }
 

@@ -8,13 +8,13 @@ spring:
       client:
         registration:
           GOOGLE:
-            clientId: "{CLIENT_ID}"
-            clientSecret: "{CLIENT_SECRET}"
+            clientId: 1059223748202-g5t4ts5vboaf044vaohhf3m726qf72ok.apps.googleusercontent.com
+            clientSecret: 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
           FACEBOOK:
-            clientId: "{CLIENT_ID}"
-            clientSecret: "{CLIENT_SECRET}"
+            clientId: 862672541509555
+            clientSecret: 2cfa304cd4f11d1b2b7d3eb000d59132
           GITHUB:
-            clientId: "{CLIENT_ID}"
-            clientSecret: "{CLIENT_SECRET}"
+            clientId: c5072f2e5794c37e80de
+            clientSecret: d4eb9d4ce91ee652f0c2eae777a986aef450a4b9
   thymeleaf:
     cache: false
