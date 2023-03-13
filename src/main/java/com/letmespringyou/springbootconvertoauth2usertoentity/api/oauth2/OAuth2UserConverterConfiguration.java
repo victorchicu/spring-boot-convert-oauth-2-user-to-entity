@@ -15,7 +15,7 @@ public class OAuth2UserConverterConfiguration {
     public OAuth2UserConverterRegistry oauth2UserConverterRegistry(List<OAuth2UserConverter<OAuth2User>> oauth2UserConverters) {
         return new OAuth2UserConverterRegistry(
                 oauth2UserConverters.stream()
-                        .collect(toMap(OAuth2UserConverter::supportedRequestType, Function.identity()))
+                        .collect(toMap(OAuth2UserConverter::supportedProvider, Function.identity()))
         );
     }
 }

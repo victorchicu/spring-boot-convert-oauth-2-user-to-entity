@@ -25,11 +25,11 @@ public class DefaultOidcUserService extends OidcUserService {
 
     @Override
     public OidcUser loadUser(OidcUserRequest userRequest) throws OAuth2AuthenticationException {
-        OidcUser oidcUser = super.loadUser(userRequest);
+        DefaultOidcUser oidcUser = (DefaultOidcUser) super.loadUser(userRequest);
         User user = oauth2UserConverterRegistry.convert(userRequest, oidcUser);
         Set<GrantedAuthority> grantedAuthorities = userService.findByEmail(user.getEmail())
                 .orElseGet(() -> userService.save(user))
                 .getGrantedAuthorities();
-        return new DefaultOidcUser(grantedAuthorities, oidcUser.getIdToken(), oidcUser.getUserInfo());
+        return new DefaultOidcUser(grantedAuthorities, oidcUser.getIdToken(), oidcUser.getName());
     }
 }

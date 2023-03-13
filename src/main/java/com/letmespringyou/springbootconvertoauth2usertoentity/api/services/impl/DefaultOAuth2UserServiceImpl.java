@@ -24,11 +24,14 @@ public class DefaultOAuth2UserServiceImpl extends DefaultOAuth2UserService {
     }
 
     @Override
-    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        OAuth2User oauth2User = super.loadUser(userRequest);
-        User user = oauth2UserConverterRegistry.convert(userRequest, oauth2User);
-        Set<GrantedAuthority> grantedAuthorities = userService.findByEmail(user.getEmail())
-                .orElseGet(() -> userService.save(user)).getGrantedAuthorities();
-        return new DefaultOAuth2User(grantedAuthorities, oauth2User.getAttributes(), oauth2User.getName());
+    public OAuth2User loadUser(OAuth2UserRequest oauth2UserRequest) throws OAuth2AuthenticationException {
+        OAuth2User oauth2User = super.loadUser(oauth2UserRequest);
+        User user = userService.findByEmail(oauth2User.getAttribute("email"))
+                .orElseGet(() ->
+                        userService.save(oauth2UserConverterRegistry.convert(oauth2UserRequest, oauth2User))
+                );
+        String nameAttributeKey = oauth2UserRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint()
+                .getUserNameAttributeName();
+        return new DefaultOAuth2User(user.getGrantedAuthorities(), oauth2User.getAttributes(), nameAttributeKey);
     }
 }

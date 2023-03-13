@@ -41,13 +41,14 @@ public class OAuth2LoginConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
-                        authorizationManagerRequestMatcherRegistry.requestMatchers("/css/**", "/login/oauth2")
+                        authorizationManagerRequestMatcherRegistry.requestMatchers("/static/**", "/login/oauth2")
                                 .permitAll()
                 )
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                         authorizationManagerRequestMatcherRegistry.anyRequest()
                                 .authenticated()
                 )
+                .cors().disable().csrf().disable()
                 .oauth2Login(httpSecurityOAuth2LoginConfigurer ->
                         httpSecurityOAuth2LoginConfigurer
                                 .loginPage("/login/oauth2")

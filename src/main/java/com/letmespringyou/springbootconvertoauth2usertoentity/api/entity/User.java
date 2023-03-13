@@ -4,8 +4,7 @@ import com.letmespringyou.springbootconvertoauth2usertoentity.api.enums.OAuth2Ex
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.mongodb.core.index.CompoundIndex;
-import org.springframework.data.mongodb.core.index.CompoundIndexes;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -13,10 +12,10 @@ import java.time.Instant;
 import java.util.Set;
 
 @Document(collection = "users")
-@CompoundIndexes({@CompoundIndex(def = "{'email': 1, 'phoneNumber': 1}", name = "email_phoneNumber_idx", unique = true)})
 public class User {
     @Id
     private String id;
+    @Indexed(unique = true)
     private String email;
     private String fullName;
     private String picture;
@@ -25,7 +24,7 @@ public class User {
     @LastModifiedDate
     private Instant updatedAt;
     private Set<GrantedAuthority> grantedAuthorities;
-    private OAuth2ExtendedProvider provider;
+    private OAuth2ExtendedProvider viaProvider;
 
     public User() {
         //
@@ -39,7 +38,7 @@ public class User {
         setCreatedAt(builder.createdAt);
         setUpdatedAt(builder.updatedAt);
         setGrantedAuthorities(builder.grantedAuthorities);
-        setProvider(builder.provider);
+        setViaProvider(builder.viaProvider);
     }
 
     public static Builder builder() {
@@ -102,12 +101,12 @@ public class User {
         this.grantedAuthorities = grantedAuthorities;
     }
 
-    public OAuth2ExtendedProvider getProvider() {
-        return provider;
+    public OAuth2ExtendedProvider getViaProvider() {
+        return viaProvider;
     }
 
-    public void setProvider(OAuth2ExtendedProvider provider) {
-        this.provider = provider;
+    public void setViaProvider(OAuth2ExtendedProvider viaProvider) {
+        this.viaProvider = viaProvider;
     }
 
     public static final class Builder {
@@ -118,7 +117,7 @@ public class User {
         private Instant createdAt;
         private Instant updatedAt;
         private Set<GrantedAuthority> grantedAuthorities;
-        private OAuth2ExtendedProvider provider;
+        private OAuth2ExtendedProvider viaProvider;
 
         private Builder() {
         }
@@ -158,8 +157,8 @@ public class User {
             return this;
         }
 
-        public Builder withProvider(OAuth2ExtendedProvider provider) {
-            this.provider = provider;
+        public Builder withViaProvider(OAuth2ExtendedProvider viaProvider) {
+            this.viaProvider = viaProvider;
             return this;
         }
 

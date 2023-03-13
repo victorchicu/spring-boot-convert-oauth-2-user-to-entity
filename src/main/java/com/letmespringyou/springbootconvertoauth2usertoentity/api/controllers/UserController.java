@@ -19,11 +19,12 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
-    public UserDto me(@AuthenticationPrincipal OAuth2User principal) {
-        return userService.findByEmail(principal.getAttribute("email"))
+    @GetMapping("/self")
+    public UserDto self(@AuthenticationPrincipal OAuth2User principal) {
+        String email = principal.getAttribute("email");
+        return userService.findByEmail(email)
                 .map(this::toUserDto)
-                .orElseThrow(() -> new OopsSomethingWentWrong("Couldn't find a user with the email: " + principal.getAttribute("email")));
+                .orElseThrow(() -> new OopsSomethingWentWrong("Unable to find a user with email: " + email));
     }
 
     private UserDto toUserDto(User user) {
@@ -31,7 +32,7 @@ public class UserController {
                 .withId(user.getId())
                 .withEmail(user.getEmail())
                 .withPicture(user.getPicture())
-                .withProvider(user.getProvider())
+                .withProvider(user.getViaProvider())
                 .build();
     }
 }
