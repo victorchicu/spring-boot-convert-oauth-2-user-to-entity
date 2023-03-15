@@ -1,0 +1,20 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/let_me_spring_you
+      auto-index-creation: true
+  security:
+    oauth2:
+      client:
+        registration:
+          GOOGLE:
+            clientId: "{CLIENT_ID}"
+            clientSecret: "{CLIENT_SECRET}"
+          FACEBOOK:
+            clientId: "{CLIENT_ID}"
+            clientSecret: "{CLIENT_SECRET}"
+          GITHUB:
+            clientId: "{CLIENT_ID}"
+            clientSecret: "{CLIENT_SECRET}"
+  thymeleaf:
+    cache: false

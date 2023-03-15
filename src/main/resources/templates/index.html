@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Profile | Let me Spring you</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description"/>
+    <meta content="Coderthemes" name="author"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="/assets/images/favicon.ico">
+    <!-- App css -->
+    <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" type="text/css" id="bs-stylesheet"/>
+    <link th:href="@{/assets/css/app.min.css}" rel="stylesheet" type="text/css" id="app-stylesheet"/>
+    <!-- icons -->
+    <link th:href="@{/assets/css/icons.min.css}" rel="stylesheet" type="text/css"/>
+</head>
+
+<body data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed", "sidebar": { "color": "dark", "size": "default", "showuser": false}, "topbar": {"color": "light"}, "showRightSidebarOnPageLoad": true}'>
+
+<div id="wrapper">
+    <div class="navbar-custom">
+        <div class="container-fluid">
+            <ul class="list-unstyled topnav-menu float-end mb-0">
+                <li class="dropdown notification-list topbar-dropdown">
+                    <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown"
+                       href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                        <img th:src="${user.getPicture()}" onerror="this.onerror=null; this.src='/assets/images/avatar-1.jpg'" alt="user-image" class="rounded-circle">
+                        <span class="pro-user-name ms-1" th:text="${user.getFullName()}">
+                                     Nik Patel <i class="mdi mdi-chevron-down"></i>
+                                </span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
+                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                            <i class="ri-logout-box-line"></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
+                </li>
+
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <div class="left-side-menu">
+        <div class="clearfix"></div>
+    </div>
+    <div class="content-page">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row mt-2">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <img th:src="${user.getPicture()}"
+                                 onerror="this.onerror=null; this.src='/assets/images/avatar-1.jpg'"
+                                 class="rounded-circle avatar-xl img-thumbnail"
+                                 alt="profile-image">
+
+                            <h4 class="mt-3 mb-0" th:text="${user.getFullName()}">Your name</h4>
+                            <p class="text-muted">Senior Java Developer</p>
+
+                            <a href="https://www.linkedin.com/in/victorchicu/" type="button" class="btn btn-success btn-xs waves-effect mb-2 waves-light">
+                                Follow
+                            </a>
+                            <a href="mailto: victor.chicu@hotmail.com" type="button" class="btn btn-danger btn-xs waves-effect mb-2 waves-light">
+                                Message
+                            </a>
+
+                            <div class="text-start mt-3">
+                                <h4 class="font-13 text-uppercase">About Me :</h4>
+                                <p class="text-muted font-13 mb-3">
+                                    I'm an experienced and passionate developer with strong skills in Java.
+                                    As a strong team player with good self-learning skills, I enjoy collaborating with others to solve complex problems.
+                                    In my free time, I continue to develop my skills and knowledge by working on personal projects.
+                                    I am also interested in sharing my experience and knowledge with others, which is why I have created a personal blog about Java and Spring Framework.
+                                </p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-borderless table-sm">
+                                        <tbody>
+                                        <tr>
+                                            <th scope="row">Full Name :</th>
+                                            <td class="text-muted" th:text="${user.getFullName()}"></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Mobile :</th>
+                                            <td class="text-muted" th:text="${user.getPhoneNumber()}"></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Email :</th>
+                                            <td class="text-muted" th:text="${user.getEmail()}"></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Location :</th>
+                                            <td class="text-muted" th:text="${user.getLocation()}"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <ul class="social-list list-inline mb-0">
+                                <li class="list-inline-item">
+                                    <a href="https://www.facebook.com/mr.kernighan"
+                                       class="social-list-item border-purple text-purple"><i
+                                            class="mdi mdi-facebook"></i></a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="https://www.linkedin.com/in/victorchicu/" class="social-list-item border-info text-info"><i
+                                            class="mdi mdi-linkedin"></i></a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="https://github.com/victorchicu"
+                                       class="social-list-item border-secondary text-secondary"><i
+                                            class="mdi mdi-github"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/assets/js/vendor.min.js}"></script>
+<script th:src="@{/assets/js/app.min.js}"></script>
+<script>
+    $(document).ready(function() {
+        $("body").attr("data-sidebar-size","condensed");
+    });
+</script>
+</body>
+</html>
