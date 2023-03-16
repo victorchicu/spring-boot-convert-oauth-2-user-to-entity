@@ -6,8 +6,6 @@ import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserServ
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
-import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
-import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
@@ -28,13 +26,9 @@ public class ExtendedDefaultOAuth2UserService extends DefaultOAuth2UserService {
     public OAuth2User loadUser(OAuth2UserRequest oauth2UserRequest) throws OAuth2AuthenticationException {
         OAuth2User oauth2User = super.loadUser(oauth2UserRequest);
         User user = oauth2UserConverterRegistry.convert(oauth2UserRequest, oauth2User);
-        userService.findOneBy(user.getEmail(), user.getSocialProvider()).orElseGet(() -> userService.save(user));
+        userService.findUser(user.getEmail(), user.getSocialProvider()).orElseGet(() -> userService.saveUser(user));
         String nameAttributeKey = oauth2UserRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
-        return new SocialOAuth2User(
-                user.getGrantedAuthorities(),
-                new OidcIdToken(UUID.randomUUID().toString(), Instant.now(), Instant.MAX, oauth2User.getAttributes()),
-                nameAttributeKey,
-                user.getSocialProvider()
-        );
+        OidcIdToken fakeOidcToken = new OidcIdToken(UUID.randomUUID().toString(), Instant.now(), Instant.MAX, oauth2User.getAttributes());
+        return new SocialOAuth2User(user.getGrantedAuthorities(), fakeOidcToken, nameAttributeKey, user.getSocialProvider());
     }
 }

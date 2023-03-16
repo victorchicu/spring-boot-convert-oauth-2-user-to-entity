@@ -5,7 +5,6 @@ import com.letmespringyou.springbootconvertoauth2usertoentity.api.services.UserS
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +22,7 @@ public class ExtendedOidcUserService extends OidcUserService {
     public OidcUser loadUser(OidcUserRequest oidcUserRequest) throws OAuth2AuthenticationException {
         OidcUser oidcUser = super.loadUser(oidcUserRequest);
         User user = oauth2UserConverterRegistry.convert(oidcUserRequest, oidcUser);
-        userService.findOneBy(user.getEmail(), user.getSocialProvider()).orElseGet(() -> userService.save(user));
+        userService.findUser(user.getEmail(), user.getSocialProvider()).orElseGet(() -> userService.saveUser(user));
         String nameAttributeKey = oidcUserRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
         return new SocialOAuth2User(user.getGrantedAuthorities(), oidcUser.getIdToken(), nameAttributeKey, user.getSocialProvider());
     }

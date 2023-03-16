@@ -14,7 +14,7 @@ import java.util.Set;
 
 @Document(collection = "users")
 @CompoundIndexes({
-        @CompoundIndex(name = "email_viaProvider_idx", def = "{'email' : 1, 'viaProvider' : 1}", unique = true)
+        @CompoundIndex(name = "email_socialProvider_idx", def = "{'email' : 1, 'socialProvider' : 1}", unique = true)
 })
 public class User {
     @Id

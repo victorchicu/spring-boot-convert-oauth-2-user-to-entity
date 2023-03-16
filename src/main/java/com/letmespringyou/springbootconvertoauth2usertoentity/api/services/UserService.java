@@ -6,7 +6,7 @@ import com.letmespringyou.springbootconvertoauth2usertoentity.api.oauth2.OAuth2E
 import java.util.Optional;
 
 public interface UserService {
-    User save(User user);
+    User saveUser(User user);
 
-    Optional<User> findOneBy(String email, OAuth2ExtendedProvider provider);
+    Optional<User> findUser(String email, OAuth2ExtendedProvider provider);
 }

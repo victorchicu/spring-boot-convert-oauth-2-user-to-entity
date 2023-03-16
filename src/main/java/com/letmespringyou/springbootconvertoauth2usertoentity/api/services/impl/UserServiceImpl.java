@@ -16,12 +16,12 @@ public class UserServiceImpl implements UserService {
         this.userMongoRepository = userMongoRepository;
     }
 
-    public User save(User user) {
+    public User saveUser(User user) {
         return userMongoRepository.save(user);
     }
 
     @Override
-    public Optional<User> findOneBy(String email, OAuth2ExtendedProvider provider) {
+    public Optional<User> findUser(String email, OAuth2ExtendedProvider provider) {
         return userMongoRepository.findByEmailAndSocialProvider(email, provider);
     }
 }
